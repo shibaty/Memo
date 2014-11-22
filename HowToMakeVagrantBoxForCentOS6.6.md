@@ -128,7 +128,7 @@ $ exit
   * コンソールから以下を実施
 
 ```console
-# mount -t iso9660 /dev/cdrom1 /mnt
+# mount -t iso9660 /dev/cdrom /mnt
 # /mnt/VBoxLinuxAdditions.run
 # shutdown -r now
 <- 一応再起動

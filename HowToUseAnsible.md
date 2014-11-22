@@ -28,7 +28,8 @@ vagrant init後に*Vagrantfile*に以下の設定を追加する(最後のendの
 ```
 
 ### sshの設定
-vagrant up後にsshの設定を行う
+
+vagrant up後にsshの設定を行う。
 
 ```console
 $ vagrant ssh-config manage >> ~/.ssh/config
@@ -37,7 +38,20 @@ $ scp -F ~/.ssh/config /c/Users/[User Name]/.vagrant.d/insecure_private_key mana
 <- manageからnode1にsshできるよう、vagrantの秘密鍵をコピー
 $ ssh manage
 ```
-scpしたid_rsaのパーミッションを変更
+
+scpしたid_rsaのパーミッションを変更。
+
 ```console
 $ chmod 600 ~/.ssh/id_rsa
 ```
+
+### 管理用サーバの設定
+
+デフォルトのホスト名だとわかりにくいので、管理用サーバのホスト名を変更。
+
+```console
+sudo vi /etc/sysconfig/network
+HOSTNAME=manage
+sudo shutdown -r now
+```
+

@@ -26,9 +26,10 @@ ISOをマウントして通常インストール
 +SELINUX=disabled
 ```
 ```console
+# shutdown -r now
+<-再起動
 # getenforce
 Disabled <- 無効化を確認
-# shutdown -r now
 ```
 
 ### iptablesの無効化
@@ -88,8 +89,9 @@ $ ssh root@localhost -p 2222
 ```console
 # groupadd vagrant
 # useradd vagrant -g vagrant -G wheel
-# echo "vagrant" | passwd --stdin vagrant
-# echo "vagrant ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/vagrant
+# echo 'vagrant' | passwd --stdin vagrant
+# echo 'vagrant ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers.d/vagrant
+# echo 'Defaults:vagrant !requiretty' >> /etc/sudoers.d/vagrant
 # chmod 0440 /etc/sudoers.d/vagrant
 ```
 
@@ -117,7 +119,7 @@ $ exit
 ### 最低限必要なパッケージをインストール
 
 ```console
-# yum -y install man man-pages-ja gcc-g++ perl kernel-devel dkms
+# yum -y install man man-pages-ja gcc-g++ perl kernel-devel dkms wget
 ```
 
 ### Guest Additionsのインストール

@@ -55,3 +55,29 @@ HOSTNAME=manage
 sudo shutdown -r now
 ```
 
+### ansibleのインストール
+
+管理用ホストにインストールする。
+
+```console
+$ sudo yum -y install ansible
+```
+
+### ansible環境作成
+
+**gmpをアップデートしろというWarningは無視してよい。  
+  初回接続時はknown_hostsの追加が行われる。**
+
+```console
+$ mkdir ansible
+$ echo '192.168.33.12' > hosts
+<- インベントリファイルの作成
+$ ansible -i hosts 192.168.33.12 -m ping
+192.168.33.12 | success >> {
+    "changed": false,
+    "ping": "pong"
+}
+<- 動作確認OK
+```
+
+

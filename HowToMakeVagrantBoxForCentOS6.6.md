@@ -171,3 +171,15 @@ $ exit
 $ vagrant package --base [VM Name]
 <- package.boxが出来上がる
 ```
+## minttyからsshする場合
+vagrant sshだと以下のエラーがでる
+```console
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+```
+sshコマンドでログインは可能。
+設定を簡単にするなら以下を実施する。
+```console
+$ vagrant ssh-config --host vagrant >> ~/.ssh/config
+$ ssh vagrant
+<- vagrantのaliasでログインできるようになる
+```

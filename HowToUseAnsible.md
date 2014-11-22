@@ -69,7 +69,6 @@ $ sudo yum -y install ansible
   初回接続時はknown_hostsの追加が行われる。**
 
 ```console
-$ mkdir ansible
 $ echo '192.168.33.12' > hosts
 <- インベントリファイルの作成
 $ ansible -i hosts 192.168.33.12 -m ping

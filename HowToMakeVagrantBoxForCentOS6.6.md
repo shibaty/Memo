@@ -17,11 +17,15 @@ ISOをマウントして通常インストール
 ### SELinux無効化
 ローカル環境の場合のみ
 
-```
+```console
 # setenforce 0
 # vi /etc/selinux/config
+```
+```diff
 -SELINUX=enforcing
 +SELINUX=disabled
+```
+```console
 # getenforce
 Disabled <- 無効化を確認
 # shutdown -r now
@@ -30,7 +34,7 @@ Disabled <- 無効化を確認
 ### iptablesの無効化
 ローカル環境オンリーの場合のみ
 
-```
+```console
 # service iptables stop
 # service ip6tables stop
 # chkconfig iptables off
@@ -41,10 +45,14 @@ Disabled <- 無効化を確認
 
 ### eth0の有効化
 
-```
+```console
 # vi /etc/sysconfig/network-scripts/ifcfg-eth0
+```
+```diff
 -ONBOOT=no
 +ONBOOT=yes
+```
+```console
 # service network restart
 # ifconfig
 <- eth0の有効化を確認
@@ -56,7 +64,7 @@ Disabled <- 無効化を確認
  **VMを落として編集すること。  
    Virtualboxのマネージャーを起動している場合は、再起動しないと有効にならないので注意。**
 
-```xml
+```diff
 -<DNS pass-domain="true" use-proxy="false" use-host-resolver="false"/>
 +<DNS pass-domain="false" use-proxy="false" use-host-resolver="true"/>
 ```
@@ -70,14 +78,14 @@ VirtualBox上だと作業しにくいので、一時的に外部からsshでき�
     * ホストポート:2222
     * ゲストポート:22
   
-```
+```console
 $ ssh root@localhost -p 2222
 <- ログインできればOK
 ```
 
 ### vagrantユーザの作成
 
-```
+```console
 # groupadd vagrant
 # useradd vagrant -g vagrant -G wheel
 # echo "vagrant"|passwd --stdin vagrant
@@ -87,7 +95,7 @@ $ ssh root@localhost -p 2222
 
 ### vagrantユーザのsshを設定
 
-```
+```console
 # su - vagrant
 $ mkdir -pm 700 .ssh
 $ cd .ssh
@@ -98,7 +106,7 @@ $ exit
 
 ### パッケージ最新化
 
-```
+```console
 # yum -y install epel-release
 <- EPELレポジトリを追加
 # yum -y update
@@ -108,7 +116,7 @@ $ exit
 
 ### 最低限必要なパッケージをインストール
 
-```
+```console
 # yum -y install man man-pages-ja gcc-g++ perl kernel-devel dkms
 ```
 
@@ -117,7 +125,7 @@ $ exit
 * VMのメニューからデバイス->Guest AdditionsのCDイメージを挿入
   * コンソールから以下を実施
 
-```
+```console
 # mount -t iso9660 /dev/cdrom1 /mnt
 # /mnt/VBoxLinuxAdditions.run
 # shutdown -r now
@@ -126,7 +134,7 @@ $ exit
 
 ### box作成用のクリーンアップ
 
-```
+```console
 # yum clean all
 # dd if=/dev/zero of=/EMPTY bs=1M
 # rm -rf /EMPTY
@@ -134,7 +142,7 @@ $ exit
 
 ### 環境構築日を記録して終了
 
-```
+```console
 # date > /etc/vagrant_box_build_time
 # shutdown -h now
 ```
@@ -148,7 +156,7 @@ $ exit
 ### boxの作成
 ホストOSのコンソールで実施。
 
-```
+```console
 $ vagrant package --base [VM Name]
 <- package.boxが出来上がる
 ```

@@ -15,6 +15,7 @@ vagrant init後に*Vagrantfile*に以下の設定を追加する(最後のendの
   # Manage Node for ansible
   config.vm.define :manage do |node|
     node.vm.box = "[box name]"
+    node.host_name = "manage"
     node.vm.network :forwarded_port, guest: 22, host: 2223, id: "ssh"
     node.vm.network :private_network, ip: "192.168.33.11"
   end
@@ -22,6 +23,7 @@ vagrant init後に*Vagrantfile*に以下の設定を追加する(最後のendの
   # target node 1
   config.vm.define :node1 do |node|
     node.vm.box = "[box name]"
+    node.host_name = "node1"
     node.vm.network :forwarded_port, guest: 22, host: 2224, id: "ssh"
     node.vm.network :private_network, ip: "192.168.33.12"
   end
@@ -45,14 +47,13 @@ scpしたid_rsaのパーミッションを変更。
 $ chmod 600 ~/.ssh/id_rsa
 ```
 
-### 管理用サーバの設定
+### ターゲットホストのホスト名を管理用ホストに登録
 
-デフォルトのホスト名だとわかりにくいので、管理用サーバのホスト名を変更。
+管理用ホストの*/etc/hosts*を書き換える
 
 ```console
-sudo vi /etc/sysconfig/network
-HOSTNAME=manage
-sudo shutdown -r now
+$ sudo vi /etc/hosts
+192.168.33.12 node1
 ```
 
 ### ansibleのインストール

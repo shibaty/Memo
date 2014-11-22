@@ -119,7 +119,7 @@ $ exit
 ### 最低限必要なパッケージをインストール
 
 ```console
-# yum -y install man man-pages-ja gcc-g++ perl kernel-devel dkms wget
+# yum -y install man man-pages-ja gcc-c++ perl kernel-devel dkms wget
 ```
 
 ### Guest Additionsのインストール

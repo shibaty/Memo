@@ -57,7 +57,10 @@ Disabled <- 無効化を確認
 # service network restart
 # ifconfig
 <- eth0の有効化を確認
+# shutdown -h now
 ```
+
+## Virtualbox側の設定
 
 ### VirtualboxのDNSの設定を修正
 ホストOSのDNS解決が動かない不具合があるので設定を修正する。  
@@ -83,6 +86,8 @@ VirtualBox上だと作業しにくいので、一時的に外部からsshでき�
 $ ssh root@localhost -p 2222
 <- ログインできればOK
 ```
+
+## vagrant用のCentOSの設定
 
 ### vagrantユーザの作成
 
@@ -148,6 +153,8 @@ $ exit
 # date > /etc/vagrant_box_build_time
 # shutdown -h now
 ```
+
+## vagrant boxの作成
 
 ### 一時的な設定の削除
 **VMを落として編集すること。**

@@ -17,32 +17,38 @@ ISOをマウントして通常インストール
 ### SELinux無効化
 ローカル環境の場合のみ
 
-    # setenforce 0
-    # vi /etc/selinux/config
-    -SELINUX=enforcing
-    +SELINUX=disabled
-    # getenforce
-    Disabled <- 無効化を確認
-    # shutdown -r now
+```
+# setenforce 0
+# vi /etc/selinux/config
+-SELINUX=enforcing
++SELINUX=disabled
+# getenforce
+Disabled <- 無効化を確認
+# shutdown -r now
+```
 
 ### iptablesの無効化
 ローカル環境オンリーの場合のみ
 
-    # service iptables stop
-    # service ip6tables stop
-    # chkconfig iptables off
-    # chkconfig ip6tables off
-    # chkconfig
-    <- iptables/ip6tablesの無効化を確認
+```
+# service iptables stop
+# service ip6tables stop
+# chkconfig iptables off
+# chkconfig ip6tables off
+# chkconfig
+<- iptables/ip6tablesの無効化を確認
+```
 
 ### eth0の有効化
 
-    # vi /etc/sysconfig/network-scripts/ifcfg-eth0
-    -ONBOOT=no
-    +ONBOOT=yes
-    # service network restart
-    # ifconfig
-    <- eth0の有効化を確認
+```
+# vi /etc/sysconfig/network-scripts/ifcfg-eth0
+-ONBOOT=no
++ONBOOT=yes
+# service network restart
+# ifconfig
+<- eth0の有効化を確認
+```
 
 ### VirtualboxのDNSの設定を修正
 ホストOSのDNS解決が動かない不具合があるので設定を修正する。  
@@ -50,8 +56,10 @@ ISOをマウントして通常インストール
  **VMを落として編集すること。  
    Virtualboxのマネージャーを起動している場合は、再起動しないと有効にならないので注意。**
 
-    -<DNS pass-domain="true" use-proxy="false" use-host-resolver="false"/>
-    +<DNS pass-domain="false" use-proxy="false" use-host-resolver="true"/>
+```xml
+-<DNS pass-domain="true" use-proxy="false" use-host-resolver="false"/>
++<DNS pass-domain="false" use-proxy="false" use-host-resolver="true"/>
+```
 
 ### 一時的に外部からsshできるようにする
 VirtualBox上だと作業しにくいので、一時的に外部からsshできるようにする。  
@@ -62,60 +70,74 @@ VirtualBox上だと作業しにくいので、一時的に外部からsshでき�
     * ホストポート:2222
     * ゲストポート:22
   
-
-    $ ssh root@localhost -p 2222
-    <- ログインできればOK
+```
+$ ssh root@localhost -p 2222
+<- ログインできればOK
+```
 
 ### vagrantユーザの作成
 
-    # groupadd vagrant
-    # useradd vagrant -g vagrant -G wheel
-    # echo "vagrant"|passwd --stdin vagrant
-    # echo "vagrant ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/vagrant
-    # chmod 0440 /etc/sudoers.d/vagrant
+```
+# groupadd vagrant
+# useradd vagrant -g vagrant -G wheel
+# echo "vagrant"|passwd --stdin vagrant
+# echo "vagrant ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/vagrant
+# chmod 0440 /etc/sudoers.d/vagrant
+```
 
 ### vagrantユーザのsshを設定
 
-    # su - vagrant
-    $ mkdir -pm 700 .ssh
-    $ cd .ssh
-    $ curl -k -L -o authorized_keys 'https://raw.github.com/mitchellh/vagrant/master/keys/vagrant.pub'
-    $ chmod 600 authorized_keys
-    $ exit
+```
+# su - vagrant
+$ mkdir -pm 700 .ssh
+$ cd .ssh
+$ curl -k -L -o authorized_keys 'https://raw.github.com/mitchellh/vagrant/master/keys/vagrant.pub'
+$ chmod 600 authorized_keys
+$ exit
+```
 
 ### パッケージ最新化
 
-    # yum -y install epel-release
-    <- EPELレポジトリを追加
-    # yum -y update
-    # shutdown -r now
-    <- カーネルバージョンアップがあったら再起動
+```
+# yum -y install epel-release
+<- EPELレポジトリを追加
+# yum -y update
+# shutdown -r now
+<- カーネルバージョンアップがあったら再起動
+```
 
 ### 最低限必要なパッケージをインストール
 
-    # yum -y install man man-pages-ja gcc-g++ perl kernel-devel dkms
+```
+# yum -y install man man-pages-ja gcc-g++ perl kernel-devel dkms
+```
 
 ### Guest Additionsのインストール
 
 * VMのメニューからデバイス->Guest AdditionsのCDイメージを挿入
   * コンソールから以下を実施
-<!-- list break -->
 
-    # mount -t iso9660 /dev/cdrom1 /mnt
-    # /mnt/VBoxLinuxAdditions.run
-    # shutdown -r now
-    <- 一応再起動
+```
+# mount -t iso9660 /dev/cdrom1 /mnt
+# /mnt/VBoxLinuxAdditions.run
+# shutdown -r now
+<- 一応再起動
+```
 
 ### box作成用のクリーンアップ
 
-    # yum clean all
-    # dd if=/dev/zero of=/EMPTY bs=1M
-    # rm -rf /EMPTY
+```
+# yum clean all
+# dd if=/dev/zero of=/EMPTY bs=1M
+# rm -rf /EMPTY
+```
 
 ### 環境構築日を記録して終了
 
-    # date > /etc/vagrant_box_build_time
-    # shutdown -h now
+```
+# date > /etc/vagrant_box_build_time
+# shutdown -h now
+```
 
 ### 一時的なssh設定の削除
 **VMを落として編集すること。**
@@ -126,5 +148,7 @@ VirtualBox上だと作業しにくいので、一時的に外部からsshでき�
 ### boxの作成
 ホストOSのコンソールで実施。
 
-    $ vagrant package --base [VM Name]
-    <- package.boxが出来上がる
+```
+$ vagrant package --base [VM Name]
+<- package.boxが出来上がる
+```

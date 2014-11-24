@@ -15,7 +15,7 @@ vagrant init後に*Vagrantfile*に以下の設定を追加する(最後のendの
   # Manage Node for ansible
   config.vm.define :manage do |node|
     node.vm.box = "[box name]"
-    node.host_name = "manage"
+    node.vm.host_name = "manage"
     node.vm.network :forwarded_port, guest: 22, host: 2223, id: "ssh"
     node.vm.network :private_network, ip: "192.168.33.11"
   end
@@ -23,7 +23,7 @@ vagrant init後に*Vagrantfile*に以下の設定を追加する(最後のendの
   # target node 1
   config.vm.define :node1 do |node|
     node.vm.box = "[box name]"
-    node.host_name = "node1"
+    node.vm.host_name = "node1"
     node.vm.network :forwarded_port, guest: 22, host: 2224, id: "ssh"
     node.vm.network :private_network, ip: "192.168.33.12"
   end

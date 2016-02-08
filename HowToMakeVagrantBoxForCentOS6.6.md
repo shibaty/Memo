@@ -139,6 +139,13 @@ $ exit
 <- 一応再起動
 ```
 
+### vagrant配布用にMACアドレス記録無効化
+
+```console
+# rm /etc/udev/rules.d/70-persistent-net.rules
+# ln -s /dev/null /etc/udev/rules.d/70-persistent-net.rules
+```
+
 ### box作成用のクリーンアップ
 
 ```console
